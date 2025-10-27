@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram test page</title>
+    <title>TeeGram test page</title>
     <style>
         * {
             margin: 0;
@@ -172,27 +172,75 @@
             color: #999;
         }
 
-        /* Стили для анимированного изображения */
-        .image-container {
-            text-align: center;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
+        /* Стили для страницы кода */
+        .code-page {
             display: none;
         }
 
-        .image-container.show {
-            opacity: 1;
-            transform: translateY(0);
-            display: block;
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
         }
 
-        .animated-image {
-            max-width: 100%;
-            height: auto;
+        .code-input {
+            width: 50px;
+            height: 60px;
+            background-color: #4C4C4C;
+            border: 2px solid #666;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .code-input {
+            background-color: #fff;
+            border-color: #e0e0e0;
+            color: #333;
+        }
+
+        .code-input:focus {
+            border-color: #1D9F7A;
+        }
+
+        .code-input.correct {
+            border-color: #1D9F7A;
+            background-color: rgba(29, 159, 122, 0.2);
+        }
+
+        .code-input.incorrect {
+            border-color: #ff4444;
+            background-color: rgba(255, 68, 68, 0.2);
+        }
+
+        .code-message {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .light-theme .code-message {
+            color: #666;
+        }
+
+        .development-message {
+            text-align: center;
+            background-color: #4C4C4C;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .light-theme .development-message {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
         }
 
         /* Стили для успешного состояния */
@@ -205,7 +253,7 @@
         /* Стили для худа (уведомлений) */
         .toast {
             position: fixed;
-            top: 80px;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
             background-color: #ff4444;
@@ -355,9 +403,15 @@
             }
             
             .toast {
-                top: 70px;
+                top: 30px;
                 font-size: 14px;
                 padding: 10px 16px;
+            }
+
+            .code-input {
+                width: 45px;
+                height: 55px;
+                font-size: 20px;
             }
         }
 
@@ -368,6 +422,16 @@
             
             .header h1 {
                 font-size: 20px;
+            }
+            
+            .toast {
+                top: 25px;
+            }
+
+            .code-input {
+                width: 40px;
+                height: 50px;
+                font-size: 18px;
             }
         }
     </style>
@@ -391,15 +455,11 @@
         </label>
     </div>
 
-    <div class="container">
+    <!-- Страница ввода номера -->
+    <div class="container phone-page">
         <div class="header">
             <h1>Ваш номер телефона</h1>
             <p>Проверьте код страны и введите свой номер телефона</p>
-        </div>
-
-        <!-- Контейнер для изображения -->
-        <div class="image-container" id="imageContainer">
-            <img src="image.png" alt="Success" class="animated-image" onerror="handleImageError()">
         </div>
         
         <div class="phone-section"> 
@@ -421,7 +481,32 @@
         <div class="token-login">Вход по токену</div>
         
         <div class="footer">
-            This is reference. by @DeCoder
+            TeeGram. by @DeCoder /// plaggy pidoras
+        </div>
+    </div>
+
+    <!-- Страница ввода кода -->
+    <div class="container code-page" id="codePage">
+        <div class="header">
+            <h1>Код подтверждения</h1>
+            <p>Мы отправили SMS с кодом на номер +7 ••• ••• •• ••</p>
+        </div>
+
+        <div class="code-inputs" id="codeInputs">
+            <input type="text" class="code-input" maxlength="1" data-index="0">
+            <input type="text" class="code-input" maxlength="1" data-index="1">
+            <input type="text" class="code-input" maxlength="1" data-index="2">
+            <input type="text" class="code-input" maxlength="1" data-index="3">
+            <input type="text" class="code-input" maxlength="1" data-index="4">
+        </div>
+
+        <div class="code-message">
+            Введите код из SMS сообщения
+        </div>
+
+        <div class="development-message" id="developmentMessage">
+            <h3>self.development</h3>
+            <p>Позже доработую сайт, ес че пишите @DeCoder в тгбета</p>
         </div>
     </div>
 
@@ -429,6 +514,9 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        const CORRECT_CODE = "77923";
+        let enteredCode = "";
+
         // Функция для форматирования номера телефона
         function formatPhoneNumber(input) {
             let value = input.value.replace(/\D/g, '');
@@ -455,19 +543,6 @@
             input.value = formatted;
         }
 
-        // Функция для показа изображения с анимацией
-        function showImage() {
-            const imageContainer = document.getElementById('imageContainer');
-            imageContainer.classList.add('show');
-        }
-
-        // Функция для обработки ошибки загрузки изображения
-        function handleImageError() {
-            console.log('Изображение не найдено');
-            // Можно показать заглушку или скрыть контейнер
-            document.getElementById('imageContainer').style.display = 'none';
-        }
-
         // Функция для показа уведомлений
         function showToast(message, isSuccess = false) {
             const toast = document.getElementById('toast');
@@ -485,25 +560,6 @@
             }, 3000);
         }
 
-        // Функция для успешного ввода номера
-        function handleSuccess(phoneNumber) {
-            // Показываем изображение
-            showImage();
-            
-            // Показываем успешное уведомление
-            showToast('Номер успешно принят: +7' + phoneNumber, true);
-            
-            // Добавляем класс успешного состояния
-            document.body.classList.add('success-state');
-            
-            // Блокируем поле ввода и кнопку
-            document.getElementById('phoneInput').disabled = true;
-            document.getElementById('continueBtn').disabled = true;
-            
-            // Можно добавить дополнительную логику здесь
-            console.log('Номер телефона принят:', '+7' + phoneNumber);
-        }
-
         // Функция для переключения темы
         function toggleTheme() {
             const body = document.body;
@@ -511,11 +567,92 @@
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         }
 
+        // Функция для перехода на страницу кода
+        function showCodePage() {
+            document.querySelector('.phone-page').style.display = 'none';
+            document.getElementById('codePage').style.display = 'block';
+            
+            // Фокусируемся на первом поле ввода кода
+            setTimeout(() => {
+                document.querySelector('.code-input[data-index="0"]').focus();
+            }, 100);
+        }
+
+        // Функция для обработки ввода кода
+        function handleCodeInput(e, index) {
+            const input = e.target;
+            const value = input.value;
+            
+            // Разрешаем только цифры
+            if (value && !/^\d$/.test(value)) {
+                input.value = '';
+                return;
+            }
+            
+            // Обновляем введенный код
+            enteredCode = enteredCode.split('');
+            enteredCode[index] = value;
+            enteredCode = enteredCode.join('');
+            
+            // Если ввели цифру, переходим к следующему полю
+            if (value && index < 4) {
+                document.querySelector(`.code-input[data-index="${index + 1}"]`).focus();
+            }
+            
+            // Если удалили цифру, переходим к предыдущему полю
+            if (!value && index > 0) {
+                document.querySelector(`.code-input[data-index="${index - 1}"]`).focus();
+            }
+            
+            // Проверяем код когда все поля заполнены
+            if (enteredCode.length === 5) {
+                checkCode();
+            }
+        }
+
+        // Функция для проверки кода
+        function checkCode() {
+            const codeInputs = document.querySelectorAll('.code-input');
+            
+            if (enteredCode === CORRECT_CODE) {
+                // Правильный код - подсвечиваем зеленым по очереди
+                codeInputs.forEach((input, index) => {
+                    setTimeout(() => {
+                        input.classList.add('correct');
+                        input.classList.remove('incorrect');
+                    }, index * 200);
+                });
+                
+                // Показываем сообщение о разработке
+                setTimeout(() => {
+                    document.getElementById('developmentMessage').style.display = 'block';
+                }, 1500);
+                
+            } else {
+                // Неправильный код - подсвечиваем все красным
+                codeInputs.forEach(input => {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                });
+                
+                // Очищаем поля через секунду
+                setTimeout(() => {
+                    codeInputs.forEach(input => {
+                        input.value = '';
+                        input.classList.remove('incorrect');
+                    });
+                    enteredCode = '';
+                    codeInputs[0].focus();
+                }, 1000);
+            }
+        }
+
         // Обработчики событий
         document.addEventListener('DOMContentLoaded', function() {
             const phoneInput = document.getElementById('phoneInput');
             const continueBtn = document.getElementById('continueBtn');
             const themeCheckbox = document.getElementById('themeCheckbox');
+            const codeInputs = document.querySelectorAll('.code-input');
             
             // Восстанавливаем тему из localStorage
             const savedTheme = localStorage.getItem('theme');
@@ -529,7 +666,7 @@
             // Обработчик для переключателя темы
             themeCheckbox.addEventListener('change', toggleTheme);
             
-            // Форматирование при вводе
+            // Форматирование при вводе номера
             phoneInput.addEventListener('input', function(e) {
                 const cursorPosition = this.selectionStart;
                 const originalValue = this.value;
@@ -548,33 +685,45 @@
                 this.setSelectionRange(newCursorPosition, newCursorPosition);
             });
             
-            // Обработчик для кнопки "Продолжить"
+            // Обработчик для кнопки "Продолжить" на странице номера
             continueBtn.addEventListener('click', function() {
                 const numbers = phoneInput.value.replace(/\D/g, '');
                 if (numbers.length === 10) {
-                    handleSuccess(numbers);
+                    showCodePage();
                 } else {
                     showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
                 }
             });
             
-            // Обработчик нажатия Enter в поле ввода
+            // Обработчики для полей ввода кода
+            codeInputs.forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    handleCodeInput(e, index);
+                });
+                
+                // Обработчик для клавиш в полях кода
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && parseInt(e.target.getAttribute('data-index')) > 0) {
+                        const prevIndex = parseInt(e.target.getAttribute('data-index')) - 1;
+                        document.querySelector(`.code-input[data-index="${prevIndex}"]`).focus();
+                    }
+                });
+            });
+            
+            // Обработчик нажатия Enter в поле ввода номера
             phoneInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    const numbers = phoneInput.value.replace(/\D/g, '');
+                    const numbers = this.value.replace(/\D/g, '');
                     if (numbers.length === 10) {
-                        handleSuccess(numbers);
+                        showCodePage();
                     } else {
                         showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
                     }
                 }
             });
-
-            // Инициализация форматирования если есть значение по умолчанию
-            if (phoneInput.value) {
-                formatPhoneNumber(phoneInput);
-            }
         });
     </script>
 </body>
 </html>
+
