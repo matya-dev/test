@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram test page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #383838;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #aaa;
+            font-size: 16px;
+        }
+        
+        .phone-section {
+            background-color: #4C4C4C;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .country-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #666;
+        }
+        
+        .country-row:last-child {
+            border-bottom: none;
+        }
+        
+        .country-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .country-code {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 50px;
+        }
+        
+        .phone-input {
+            background-color: #4C4C4C;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            flex: 1;
+            letter-spacing: 2px;
+            padding-left: 10px;
+        }
+        
+        .phone-input::placeholder {
+            color: #aaa;
+            letter-spacing: 2px;
+        }
+        
+        .dropdown-arrow {
+            color: #aaa;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+        
+        .continue-btn {
+            background-color: #1D9F7A;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .continue-btn:hover {
+            background-color: #178066;
+        }
+        
+        .token-login {
+            text-align: center;
+            color: #1D9F7A;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        
+        .token-login:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ваш номер телефона</h1>
+            <p>Проверьте код страны и введите свой номер телефона</p>
+        </div>
+        
+        <div class="phone-section"> 
+            <div class="country-row">
+                <div class="country-info">
+                    <span>Russian Federation</span>
+                </div>
+            </div>
+            <div class="country-row">
+                <div class="country-info">
+                    <span class="country-code">+7</span>
+                    <input type="text" class="phone-input" placeholder="--- --- -- --">
+                </div>
+            </div>
+        </div>
+        
+        <button class="continue-btn">Продолжить</button>
+        
+        <div class="token-login">Вход по токену</div>
+        
+        <div class="footer">
+            This is reference. by @DeCoder
+        </div>
+    </div>
+</body>
+</html>
