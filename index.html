@@ -16,11 +16,13 @@
             background-color: #383838;
             color: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 60px 20px 20px;
             transition: background-color 0.3s ease;
+            position: relative;
         }
 
         body.light-theme {
@@ -30,13 +32,15 @@
         
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
+            margin-top: 20px;
         }
 
         .theme-switch-container {
             position: absolute;
             top: 20px;
             right: 20px;
+            z-index: 10;
         }
         
         .header {
@@ -110,6 +114,7 @@
             letter-spacing: 2px;
             padding-left: 10px;
             transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%;
         }
 
         .light-theme .phone-input {
@@ -174,11 +179,13 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.6s ease;
+            display: none;
         }
 
         .image-container.show {
             opacity: 1;
             transform: translateY(0);
+            display: block;
         }
 
         .animated-image {
@@ -188,10 +195,17 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
+        /* Стили для успешного состояния */
+        .success-state .phone-section,
+        .success-state .continue-btn {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
         /* Стили для худа (уведомлений) */
         .toast {
             position: fixed;
-            top: 20px;
+            top: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
             background-color: #ff4444;
@@ -202,6 +216,8 @@
             z-index: 1000;
             transition: transform 0.4s ease;
             font-weight: bold;
+            max-width: 90%;
+            text-align: center;
         }
 
         .toast.show {
@@ -307,6 +323,53 @@
         .switch input:checked ~ .slider .cloud {
             opacity: 1;
         }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 480px) {
+            body {
+                padding: 70px 15px 15px;
+                min-height: 100vh;
+                justify-content: flex-start;
+            }
+            
+            .container {
+                max-width: 100%;
+                margin-top: 10px;
+            }
+            
+            .theme-switch-container {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            .phone-input {
+                font-size: 16px;
+            }
+            
+            .toast {
+                top: 70px;
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            body {
+                padding: 60px 10px 10px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -336,7 +399,7 @@
 
         <!-- Контейнер для изображения -->
         <div class="image-container" id="imageContainer">
-            <img src="image.png" alt="Preview" class="animated-image" onerror="this.style.display='none'">
+            <img src="image.png" alt="Success" class="animated-image" onerror="handleImageError()">
         </div>
         
         <div class="phone-section"> 
@@ -348,7 +411,7 @@
             <div class="country-row">
                 <div class="country-info">
                     <span class="country-code">+7</span>
-                    <input type="tel" class="phone-input" id="phoneInput" placeholder="--- --- -- --" maxlength="12">
+                    <input type="tel" class="phone-input" id="phoneInput" placeholder="--- --- -- --">
                 </div>
             </div>
         </div>
@@ -358,7 +421,7 @@
         <div class="token-login">Вход по токену</div>
         
         <div class="footer">
-            Teegram. by @DeCoder /// plaggy pidoras
+            This is reference. by @DeCoder
         </div>
     </div>
 
@@ -398,6 +461,13 @@
             imageContainer.classList.add('show');
         }
 
+        // Функция для обработки ошибки загрузки изображения
+        function handleImageError() {
+            console.log('Изображение не найдено');
+            // Можно показать заглушку или скрыть контейнер
+            document.getElementById('imageContainer').style.display = 'none';
+        }
+
         // Функция для показа уведомлений
         function showToast(message, isSuccess = false) {
             const toast = document.getElementById('toast');
@@ -413,6 +483,25 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
+        }
+
+        // Функция для успешного ввода номера
+        function handleSuccess(phoneNumber) {
+            // Показываем изображение
+            showImage();
+            
+            // Показываем успешное уведомление
+            showToast('Номер успешно принят: +7' + phoneNumber, true);
+            
+            // Добавляем класс успешного состояния
+            document.body.classList.add('success-state');
+            
+            // Блокируем поле ввода и кнопку
+            document.getElementById('phoneInput').disabled = true;
+            document.getElementById('continueBtn').disabled = true;
+            
+            // Можно добавить дополнительную логику здесь
+            console.log('Номер телефона принят:', '+7' + phoneNumber);
         }
 
         // Функция для переключения темы
@@ -441,53 +530,50 @@
             themeCheckbox.addEventListener('change', toggleTheme);
             
             // Форматирование при вводе
-            phoneInput.addEventListener('input', function() {
+            phoneInput.addEventListener('input', function(e) {
                 const cursorPosition = this.selectionStart;
-                const beforeChange = this.value;
+                const originalValue = this.value;
                 
                 formatPhoneNumber(this);
                 
-                // Восстанавливаем позицию курсора
                 let newCursorPosition = cursorPosition;
-                if (beforeChange.length < this.value.length && this.value.charAt(cursorPosition) === ' ') {
-                    newCursorPosition = cursorPosition + 1;
-                }
-                this.setSelectionRange(newCursorPosition, newCursorPosition);
+                const addedSpaces = (this.value.match(/ /g) || []).length - (originalValue.match(/ /g) || []).length;
                 
-                // Показываем изображение когда введено достаточно цифр
-                const numbers = this.value.replace(/\D/g, '');
-                if (numbers.length >= 3) {
-                    showImage();
-                } else {
-                    document.getElementById('imageContainer').classList.remove('show');
+                if (addedSpaces > 0 && this.value.charAt(cursorPosition) === ' ') {
+                    newCursorPosition = cursorPosition + 1;
+                } else if (addedSpaces < 0) {
+                    newCursorPosition = Math.max(0, cursorPosition - 1);
                 }
-            });
-            
-            // Разрешаем навигацию стрелками и удаление
-            phoneInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                    return true;
-                }
+                
+                this.setSelectionRange(newCursorPosition, newCursorPosition);
             });
             
             // Обработчик для кнопки "Продолжить"
             continueBtn.addEventListener('click', function() {
                 const numbers = phoneInput.value.replace(/\D/g, '');
                 if (numbers.length === 10) {
-                    showToast('Номер успешно принят: +7' + numbers, true);
-                    // Здесь можно добавить логику отправки данных
+                    handleSuccess(numbers);
                 } else {
                     showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
                 }
             });
             
-            // Показываем изображение при фокусе на поле ввода
-            phoneInput.addEventListener('focus', function() {
-                const numbers = this.value.replace(/\D/g, '');
-                if (numbers.length >= 3) {
-                    showImage();
+            // Обработчик нажатия Enter в поле ввода
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const numbers = phoneInput.value.replace(/\D/g, '');
+                    if (numbers.length === 10) {
+                        handleSuccess(numbers);
+                    } else {
+                        showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
+                    }
                 }
             });
+
+            // Инициализация форматирования если есть значение по умолчанию
+            if (phoneInput.value) {
+                formatPhoneNumber(phoneInput);
+            }
         });
     </script>
 </body>
