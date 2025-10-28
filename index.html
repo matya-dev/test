@@ -90,7 +90,22 @@
         
         .phone-input::placeholder {
             color: #aaa;
-            letter-spacing: 2px;
+            letter-spacing: normal;
+        }
+        
+        .username-input {
+            background-color: #4C4C4C;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            flex: 1;
+            padding-left: 10px;
+            width: 100%;
+        }
+        
+        .username-input::placeholder {
+            color: #aaa;
         }
         
         .continue-btn {
@@ -111,6 +126,11 @@
             background-color: #178066;
         }
         
+        .continue-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        
         .token-login {
             text-align: center;
             color: #1D9F7A;
@@ -128,6 +148,14 @@
             color: #666;
             font-size: 14px;
             margin-top: 20px;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            padding: 0 15px;
+            display: none;
         }
 
         /* Стили для страницы кода */
@@ -175,6 +203,72 @@
             color: #aaa;
             font-size: 14px;
             margin-bottom: 30px;
+        }
+
+        /* Стили для страницы username */
+        .username-page {
+            display: none;
+        }
+
+        .username-section {
+            background-color: #4C4C4C;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        /* Change Log */
+        .changelog {
+            background-color: #4C4C4C;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .changelog-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1D9F7A;
+        }
+
+        .changelog-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #666;
+        }
+
+        .changelog-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .changelog-version {
+            font-weight: bold;
+            color: #1D9F7A;
+            margin-bottom: 5px;
+        }
+
+        .changelog-date {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .changelog-changes {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .changelog-changes ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .changelog-changes li {
+            margin-bottom: 4px;
         }
 
         /* Стили для успешного состояния */
@@ -245,6 +339,10 @@
                 height: 55px;
                 font-size: 20px;
             }
+
+            .changelog {
+                max-height: 150px;
+            }
         }
     </style>
 </head>
@@ -270,6 +368,43 @@
         </div>
         
         <button class="continue-btn" id="continueBtn">Продолжить</button>
+        
+        <div class="changelog">
+            <div class="changelog-title">📝 Change Log</div>
+            <div class="changelog-item">
+                <div class="changelog-version">Версия 1.2.0</div>
+                <div class="changelog-date">28 октября 2025</div>
+                <div class="changelog-changes">
+                    <ul>
+                        <li>Добавлена система Change Log</li>
+                        <li>Улучшена валидация username</li>
+                        <li>Оптимизирована работа с профилем</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="changelog-item">
+                <div class="changelog-version">Версия 1.1.0</div>
+                <div class="changelog-date">28 октября 2025</div>
+                <div class="changelog-changes">
+                    <ul>
+                        <li>Добавлена боковая панель меню</li>
+                        <li>Реализован просмотр и редактирование профиля</li>
+                        <li>Добавлен поиск по чатам</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="changelog-item">
+                <div class="changelog-version">Версия 1.0.0</div>
+                <div class="changelog-date">27 октября 2025</div>
+                <div class="changelog-changes">
+                    <ul>
+                        <li>Первоначальный запуск TeeGram</li>
+                        <li>Регистрация по номеру телефона</li>
+                        <li>Базовый функционал чатов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         
         <div class="token-login">Вход по токену</div>
         
@@ -298,12 +433,44 @@
         </div>
     </div>
 
+    <!-- Страница ввода username -->
+    <div class="container username-page" id="usernamePage">
+        <div class="header">
+            <h1>Создание профиля</h1>
+            <p>Придумайте имя пользователя для вашего аккаунта</p>
+        </div>
+        
+        <div class="username-section"> 
+            <div class="country-row">
+                <div class="country-info">
+                    <input type="text" class="username-input" id="usernameInput" placeholder="Имя пользователя (только a-z, 0-9, мин. 5 символов)">
+                </div>
+            </div>
+            <div class="error-message" id="usernameError">
+                Имя пользователя должно содержать только буквы a-z, цифры 0-9 и быть не менее 5 символов
+            </div>
+        </div>
+        
+        <button class="continue-btn" id="usernameContinueBtn" disabled>Создать профиль</button>
+        
+        <div class="footer">
+            Это имя будет отображаться другим пользователям
+        </div>
+    </div>
+
     <!-- Худ для уведомлений -->
     <div class="toast" id="toast"></div>
 
     <script>
         const CORRECT_CODE = "77923";
         let enteredCode = "";
+        let userPhoneNumber = "";
+
+        // Функция для валидации username
+        function validateUsername(username) {
+            const regex = /^[a-z0-9]{5,}$/;
+            return regex.test(username);
+        }
 
         // Функция для форматирования номера телефона
         function formatPhoneNumber(input) {
@@ -330,6 +497,26 @@
             input.value = formatted;
         }
 
+        // Функция для проверки формы username
+        function validateUsernameForm() {
+            const usernameInput = document.getElementById('usernameInput');
+            const usernameContinueBtn = document.getElementById('usernameContinueBtn');
+            const usernameError = document.getElementById('usernameError');
+            
+            const username = usernameInput.value.trim();
+            const isUsernameValid = validateUsername(username);
+            
+            // Показываем/скрываем ошибку username
+            if (username && !isUsernameValid) {
+                usernameError.style.display = 'block';
+            } else {
+                usernameError.style.display = 'none';
+            }
+            
+            // Активируем/деактивируем кнопку
+            usernameContinueBtn.disabled = !isUsernameValid;
+        }
+
         // Функция для показа уведомлений
         function showToast(message, isSuccess = false) {
             const toast = document.getElementById('toast');
@@ -348,12 +535,12 @@
         }
 
         // Функция для сохранения пользователя в базе
-        async function saveUserToDB(phoneNumber) {
+        async function saveUserToDB(phoneNumber, username) {
             try {
                 const response = await fetch('/.netlify/functions/save-user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phoneNumber })
+                    body: JSON.stringify({ phoneNumber, username })
                 });
                 const data = await response.json();
                 
@@ -377,6 +564,16 @@
             
             setTimeout(() => {
                 document.querySelector('.code-input[data-index="0"]').focus();
+            }, 100);
+        }
+
+        // Функция для перехода на страницу username
+        function showUsernamePage() {
+            document.getElementById('codePage').style.display = 'none';
+            document.getElementById('usernamePage').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('usernameInput').focus();
             }, 100);
         }
 
@@ -425,8 +622,8 @@
                 });
                 
                 setTimeout(() => {
-                    showToast('Успешный вход!', true);
-                    setTimeout(goToChatsPage, 1000);
+                    showToast('Код подтвержден!', true);
+                    setTimeout(showUsernamePage, 1000);
                 }, 1500);
                 
             } else {
@@ -449,8 +646,18 @@
         // Обработчики событий
         document.addEventListener('DOMContentLoaded', function() {
             const phoneInput = document.getElementById('phoneInput');
+            const usernameInput = document.getElementById('usernameInput');
             const continueBtn = document.getElementById('continueBtn');
+            const usernameContinueBtn = document.getElementById('usernameContinueBtn');
             const codeInputs = document.querySelectorAll('.code-input');
+            
+            // Валидация username (только латинские буквы и цифры)
+            usernameInput.addEventListener('input', function(e) {
+                let value = e.target.value.toLowerCase();
+                value = value.replace(/[^a-z0-9]/g, '');
+                e.target.value = value;
+                validateUsernameForm();
+            });
             
             // Форматирование при вводе номера
             phoneInput.addEventListener('input', function(e) {
@@ -474,19 +681,34 @@
             // Обработчик для кнопки "Продолжить" на странице номера
             continueBtn.addEventListener('click', async function() {
                 const numbers = phoneInput.value.replace(/\D/g, '');
+                
                 if (numbers.length === 10) {
-                    // Сохраняем номер в localStorage
-                    localStorage.setItem('userPhone', '+7' + numbers);
+                    userPhoneNumber = '+7' + numbers;
+                    localStorage.setItem('userPhone', userPhoneNumber);
+                    showCodePage();
+                } else {
+                    showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
+                }
+            });
+            
+            // Обработчик для кнопки создания профиля
+            usernameContinueBtn.addEventListener('click', async function() {
+                const username = usernameInput.value.trim();
+                
+                if (validateUsername(username)) {
+                    // Сохраняем username в localStorage
+                    localStorage.setItem('userUsername', username);
                     
                     // Сохраняем пользователя в базе данных
-                    const userResult = await saveUserToDB('+7' + numbers);
+                    const userResult = await saveUserToDB(userPhoneNumber, username);
                     if (userResult && userResult.success) {
                         localStorage.setItem('userId', userResult.user.id);
                     }
                     
-                    showCodePage();
+                    showToast('Профиль создан!', true);
+                    setTimeout(goToChatsPage, 1000);
                 } else {
-                    showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
+                    showToast('Пожалуйста, проверьте имя пользователя');
                 }
             });
             
@@ -505,26 +727,31 @@
                 });
             });
             
-            // Обработчик нажатия Enter в поле ввода номера
-            phoneInput.addEventListener('keypress', async function(e) {
+            // Обработчик нажатия Enter в поле username
+            usernameInput.addEventListener('keypress', async function(e) {
                 if (e.key === 'Enter') {
-                    const numbers = this.value.replace(/\D/g, '');
-                    if (numbers.length === 10) {
-                        // Сохраняем номер в localStorage
-                        localStorage.setItem('userPhone', '+7' + numbers);
+                    const username = usernameInput.value.trim();
+                    
+                    if (validateUsername(username)) {
+                        // Сохраняем username в localStorage
+                        localStorage.setItem('userUsername', username);
                         
                         // Сохраняем пользователя в базе данных
-                        const userResult = await saveUserToDB('+7' + numbers);
+                        const userResult = await saveUserToDB(userPhoneNumber, username);
                         if (userResult && userResult.success) {
                             localStorage.setItem('userId', userResult.user.id);
                         }
                         
-                        showCodePage();
+                        showToast('Профиль создан!', true);
+                        setTimeout(goToChatsPage, 1000);
                     } else {
-                        showToast('Пожалуйста, введите полный номер телефона (10 цифр)');
+                        showToast('Пожалуйста, проверьте имя пользователя');
                     }
                 }
             });
+
+            // Инициализация валидации формы username
+            validateUsernameForm();
         });
     </script>
 </body>
