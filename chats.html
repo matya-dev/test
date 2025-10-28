@@ -295,6 +295,16 @@
             border-right: 1px solid #666;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        /* Правая панель - сообщения */
+        .messages-panel {
+            flex: 1;
+            background-color: #383838;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         /* Шапка левой панели */
@@ -460,14 +470,6 @@
             flex-shrink: 0;
         }
 
-        /* Правая панель - сообщения */
-        .messages-panel {
-            flex: 1;
-            background-color: #383838;
-            display: flex;
-            flex-direction: column;
-        }
-
         /* Шапка правой панели */
         .messages-header {
             padding: 15px 20px;
@@ -482,6 +484,7 @@
             margin-right: 15px;
             cursor: pointer;
             color: #1D9F7A;
+            font-size: 20px;
         }
 
         .current-chat-avatar {
@@ -629,12 +632,34 @@
 
         /* Мобильная версия */
         @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
             .menu-sidebar {
                 width: 85%;
             }
 
             .chats-sidebar {
                 width: 100%;
+                height: 100%;
+                position: absolute;
+                transform: translateX(0);
+            }
+
+            .messages-panel {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                transform: translateX(100%);
+            }
+
+            .messages-panel.active {
+                transform: translateX(0);
+            }
+
+            .chats-sidebar.hidden {
+                transform: translateX(-100%);
             }
 
             .back-button {
@@ -644,6 +669,37 @@
             .profile-panel {
                 width: 90%;
                 max-width: 350px;
+            }
+
+            .chat-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .current-chat-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        /* Десктоп версия */
+        @media (min-width: 769px) {
+            .back-button {
+                display: none !important;
+            }
+
+            .chats-sidebar {
+                transform: translateX(0) !important;
+            }
+
+            .messages-panel {
+                transform: translateX(0) !important;
             }
         }
 
@@ -684,19 +740,19 @@
         <div class="menu-sidebar" id="menuSidebar">
             <div class="menu-header">
                 <div class="account-info">
-                    <div class="account-avatar" id="accountAvatar">s</div>
+                    <div class="account-avatar" id="accountAvatar">D</div>
                     <div class="account-details">
-                        <div class="account-name" id="accountName">self.{username}</div>
+                        <div class="account-name" id="accountName">DeCoder</div>
                         <div class="account-status" id="accountStatus">online</div>
                     </div>
                 </div>
-                <div class="menu-title">TeeGram</div>
+                <div class="menu-title">DeCoder</div>
             </div>
 
             <div class="menu-list">
                 <div class="menu-item active" id="profileBtn">
                     <div class="menu-icon">👤</div>
-                    <div class="menu-text">Moй профиль</div>
+                    <div class="menu-text">Mobi профиль</div>
                 </div>
                 
                 <div class="menu-divider"></div>
@@ -731,7 +787,7 @@
                 </div>
                 <div class="menu-item">
                     <div class="menu-icon">⚙️</div>
-                    <div class="menu-text">Haстройки</div>
+                    <div class="menu-text">Hacrpolixu</div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-icon">R1</div>
@@ -761,25 +817,25 @@
                 </div>
             </div>
             <div class="profile-content">
-                <div class="profile-avatar" id="profileAvatar">s</div>
-                <div class="profile-name" id="profileNameDisplay">self.{username}</div>
+                <div class="profile-avatar" id="profileAvatar">D</div>
+                <div class="profile-name" id="profileNameDisplay">DeCoder</div>
                 <div class="profile-status" id="profileStatusDisplay">online</div>
                 
                 <div class="profile-info">
                     <div class="profile-field">
                         <div class="profile-label">телефон</div>
-                        <div class="profile-value" id="profilePhoneDisplay">+999 0000 1488</div>
+                        <div class="profile-value" id="profilePhoneDisplay">+7 100 000 0001</div>
                     </div>
                     <div class="profile-field">
                         <div class="profile-label">биография</div>
                         <div class="profile-value">
-                            <input type="text" class="profile-input" id="profileBioInput" value="i hate plaggy" disabled>
+                            <input type="text" class="profile-input" id="profileBioInput" value="20 y.o., designer" disabled>
                         </div>
                     </div>
                     <div class="profile-field">
                         <div class="profile-label">имя пользователя</div>
                         <div class="profile-value">
-                            <input type="text" class="profile-input" id="profileUsernameInput" value="self.{username}" disabled>
+                            <input type="text" class="profile-input" id="profileUsernameInput" value="decoder" disabled>
                             <div class="profile-error" id="profileUsernameError">
                                 Только буквы a-z, цифры 0-9, мин. 5 символов
                             </div>
@@ -790,7 +846,7 @@
         </div>
 
         <!-- Левая панель - список чатов -->
-        <div class="chats-sidebar">
+        <div class="chats-sidebar" id="chatsSidebar">
             <div class="sidebar-header">
                 <div class="burger-menu" id="burgerMenu">
                     <div class="burger-line"></div>
@@ -826,6 +882,17 @@
                             <div class="chat-time">plaggy_pidoras</div>
                         </div>
                         <div class="chat-last-message">self.test_message1</div>
+                    </div>
+                </div>
+
+                <div class="chat-item" data-chat="support">
+                    <div class="chat-avatar">S</div>
+                    <div class="chat-info">
+                        <div class="chat-header">
+                            <div class="chat-name">Support</div>
+                            <div class="chat-time"></div>
+                        </div>
+                        <div class="chat-last-message">self.support_message</div>
                     </div>
                 </div>
             </div>
@@ -898,6 +965,15 @@
                     { text: "test message", incoming: false, time: "11:42" },
                     { text: "self.test_message1", incoming: true, time: "11:45" }
                 ]
+            },
+            support: {
+                name: "Support",
+                avatar: "S",
+                status: "online",
+                messages: [
+                    { text: "", incoming: true, time: "" },
+                    { text: "", incoming: false, time: "" }
+                ]
             }
         };
 
@@ -905,6 +981,7 @@
         let isMenuOpen = false;
         let isProfileOpen = false;
         let isEditing = false;
+        let isMobile = window.innerWidth <= 768;
 
         // Функции для управления боковой панелью меню
         function openMenu() {
@@ -1039,6 +1116,24 @@
             }
         }
 
+        // Функции для мобильного режима чатов
+        function showChat(chatId) {
+            if (isMobile) {
+                // На мобильных - скрываем список чатов и показываем сообщения
+                document.getElementById('chatsSidebar').classList.add('hidden');
+                document.getElementById('messagesPanel').classList.add('active');
+            }
+            displayChat(chatId);
+        }
+
+        function showChatsList() {
+            if (isMobile) {
+                // На мобильных - скрываем сообщения и показываем список чатов
+                document.getElementById('messagesPanel').classList.remove('active');
+                document.getElementById('chatsSidebar').classList.remove('hidden');
+            }
+        }
+
         // Функция для отображения сообщений чата
         function displayChat(chatId) {
             const chatData = chatsData[chatId];
@@ -1106,8 +1201,17 @@
 
                 // Авто-ответ
                 setTimeout(() => {
+                    const responses = [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
                     chatData.messages.push({
-                        text: "self.test_message1",
+                        text: randomResponse,
                         incoming: true,
                         time: `${now.getHours()}:${(now.getMinutes() + 1).toString().padStart(2, '0')}`
                     });
@@ -1147,6 +1251,9 @@
             const editProfile = document.getElementById('editProfile');
             const closeProfileBtn = document.getElementById('closeProfile');
 
+            // Обновляем флаг мобильного режима при загрузке
+            isMobile = window.innerWidth <= 768;
+
             // Бургер-меню
             burgerMenu.addEventListener('click', toggleMenu);
 
@@ -1168,13 +1275,16 @@
             // Кнопка закрытия профиля (крестик)
             closeProfileBtn.addEventListener('click', closeProfile);
 
+            // Кнопка "Назад" в мобильном режиме
+            backButton.addEventListener('click', showChatsList);
+
             // Поиск чатов
             searchInput.addEventListener('input', searchChats);
 
             // Выбор чата
             chatItems.forEach(item => {
                 item.addEventListener('click', () => {
-                    displayChat(item.dataset.chat);
+                    showChat(item.dataset.chat);
                 });
             });
 
@@ -1191,6 +1301,17 @@
             messageInput.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
+            });
+
+            // Обработчик изменения размера окна
+            window.addEventListener('resize', function() {
+                isMobile = window.innerWidth <= 768;
+                
+                // На десктопе сбрасываем мобильные трансформации
+                if (!isMobile) {
+                    document.getElementById('chatsSidebar').classList.remove('hidden');
+                    document.getElementById('messagesPanel').classList.remove('active');
+                }
             });
 
             // Загрузка данных пользователя
