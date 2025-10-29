@@ -1,0 +1,4 @@
+Модель: Precious Peach
+Фон: self.background
+Узор: self.default
+Количество: 1000 из 1000

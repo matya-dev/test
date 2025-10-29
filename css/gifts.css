@@ -1,0 +1,764 @@
+/* Стили для панели подарков */
+.gifts-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 400px;
+    background-color: #4C4C4C;
+    border-radius: 15px;
+    z-index: 101;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.gifts-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.gifts-header {
+    padding: 20px 25px 15px;
+    border-bottom: 1px solid #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gifts-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.gifts-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.gifts-action {
+    cursor: pointer;
+    font-size: 16px;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.gifts-action:hover {
+    color: white;
+}
+
+.gifts-content {
+    padding: 20px 25px;
+}
+
+.gift-item {
+    background-color: #383838;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.gift-item:hover {
+    border-color: #1D9F7A;
+    transform: translateY(-2px);
+}
+
+.gift-preview {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.gift-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin: 0 auto;
+    border: 2px solid #1D9F7A;
+}
+
+.gift-name {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.gift-info {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.no-gifts {
+    text-align: center;
+    color: #aaa;
+    padding: 40px 20px;
+    font-size: 16px;
+}
+
+/* Детали подарка */
+.gift-details-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 400px;
+    background-color: #4C4C4C;
+    border-radius: 15px;
+    z-index: 102;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gift-details-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.gift-details-header {
+    padding: 20px 25px 15px;
+    border-bottom: 1px solid #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gift-details-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.gift-details-content {
+    padding: 20px 25px;
+}
+
+.gift-details-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin: 0 auto 20px;
+    display: block;
+    border: 3px solid #1D9F7A;
+}
+
+.gift-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.gift-details-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid #666;
+    vertical-align: top;
+}
+
+.gift-details-table tr:last-child td {
+    border-bottom: none;
+}
+
+.gift-details-label {
+    color: #aaa;
+    font-size: 14px;
+    width: 30%;
+}
+
+.gift-details-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.gift-visibility {
+    color: #1D9F7A;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.gift-sender {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.gift-action-button {
+    background-color: #1D9F7A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.gift-action-button:hover {
+    background-color: #178066;
+}
+
+.gift-action-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+/* Админ-панель */
+.admin-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 600px;
+    background-color: #4C4C4C;
+    border-radius: 15px;
+    z-index: 103;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.admin-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.admin-header {
+    padding: 20px 25px 15px;
+    border-bottom: 1px solid #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1D9F7A, #178066);
+}
+
+.admin-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.admin-content {
+    padding: 20px 25px;
+}
+
+.admin-gift-item {
+    display: flex;
+    align-items: center;
+    background-color: #383838;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.admin-gift-item:hover {
+    border-color: #1D9F7A;
+}
+
+.admin-gift-preview {
+    position: relative;
+    margin-right: 15px;
+}
+
+.admin-gift-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #1D9F7A;
+}
+
+.admin-gift-rarity {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+}
+
+.admin-gift-rarity.common {
+    background-color: #666;
+}
+
+.admin-gift-rarity.rare {
+    background-color: #1D9F7A;
+}
+
+.admin-gift-rarity.epic {
+    background-color: #9B59B6;
+}
+
+.admin-gift-rarity.legendary {
+    background-color: #F39C12;
+}
+
+.admin-gift-rarity.mythical {
+    background-color: #E74C3C;
+}
+
+.admin-gift-info {
+    flex: 1;
+}
+
+.admin-gift-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.admin-gift-status {
+    font-size: 12px;
+}
+
+.admin-gift-status.owned {
+    color: #1D9F7A;
+}
+
+.admin-gift-status.not-owned {
+    color: #aaa;
+}
+
+.admin-gift-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.add-btn {
+    background-color: #1D9F7A;
+    color: white;
+}
+
+.add-btn:hover:not(:disabled) {
+    background-color: #178066;
+}
+
+.remove-btn {
+    background-color: #E74C3C;
+    color: white;
+}
+
+.remove-btn:hover:not(:disabled) {
+    background-color: #C0392B;
+}
+
+.admin-stats {
+    background-color: #383838;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-stats-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1D9F7A;
+}
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.admin-stat {
+    font-size: 14px;
+}
+
+.admin-stat-value {
+    font-weight: bold;
+    color: #1D9F7A;
+}
+
+/* Отладочная панель */
+.debug-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 700px;
+    background-color: #2d2d2d;
+    border-radius: 15px;
+    z-index: 104;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 2px solid #1D9F7A;
+}
+
+.debug-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.debug-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1D9F7A, #178066);
+}
+
+.debug-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.debug-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.debug-action {
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.debug-action:hover {
+    color: #ffeb3b;
+}
+
+.debug-content {
+    padding: 20px;
+}
+
+.debug-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #383838;
+    border-radius: 8px;
+    border-left: 4px solid #1D9F7A;
+}
+
+.debug-section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1D9F7A;
+    font-size: 14px;
+}
+
+.debug-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.debug-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #444;
+}
+
+.debug-item:last-child {
+    border-bottom: none;
+}
+
+.debug-label {
+    font-size: 13px;
+    color: #aaa;
+}
+
+.debug-value {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1D9F7A;
+}
+
+.debug-gifts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.debug-gift-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.debug-gift-name {
+    color: white;
+}
+
+.debug-gift-id {
+    color: #1D9F7A;
+    font-family: monospace;
+}
+
+.debug-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.debug-btn {
+    padding: 8px 12px;
+    background-color: #1D9F7A;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.debug-btn:hover {
+    background-color: #178066;
+}
+
+.debug-btn:active {
+    transform: scale(0.98);
+}
+
+.debug-logs {
+    max-height: 120px;
+    overflow-y: auto;
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.debug-log-item {
+    padding: 3px 0;
+    color: #ddd;
+    border-bottom: 1px solid #444;
+}
+
+.debug-log-item:last-child {
+    border-bottom: none;
+}
+
+/* Кнопка открытия отладки в меню */
+.debug-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-left: 3px solid transparent;
+    margin-top: 5px;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.debug-button:hover {
+    background-color: #383838;
+    border-left-color: #ffeb3b;
+}
+
+.debug-button .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.debug-button .menu-text {
+    font-size: 13px;
+    flex: 1;
+    color: #ffeb3b;
+}
+
+/* Адаптивность для подарков */
+@media (max-width: 480px) {
+    .gifts-panel,
+    .gift-details-panel {
+        width: 90%;
+        max-width: 350px;
+    }
+    
+    .gift-image {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .gift-details-image {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Адаптивность для админ-панели */
+@media (max-width: 768px) {
+    .admin-panel {
+        width: 95%;
+        max-width: 500px;
+    }
+    
+    .admin-gift-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .admin-gift-preview {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .admin-gift-actions {
+        margin-top: 10px;
+    }
+    
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Адаптивность для отладочной панели */
+@media (max-width: 768px) {
+    .debug-panel {
+        width: 95%;
+        max-width: 500px;
+    }
+    
+    .debug-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .debug-section {
+        padding: 10px;
+    }
+}
+
+/* Скрываем скроллбар но оставляем функциональность */
+.gifts-panel::-webkit-scrollbar,
+.admin-panel::-webkit-scrollbar,
+.debug-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.gifts-panel::-webkit-scrollbar-track,
+.admin-panel::-webkit-scrollbar-track,
+.debug-panel::-webkit-scrollbar-track {
+    background: #383838;
+}
+
+.gifts-panel::-webkit-scrollbar-thumb,
+.admin-panel::-webkit-scrollbar-thumb,
+.debug-panel::-webkit-scrollbar-thumb {
+    background: #1D9F7A;
+    border-radius: 3px;
+}
+
+.debug-gifts::-webkit-scrollbar,
+.debug-logs::-webkit-scrollbar {
+    width: 4px;
+}
+
+.debug-gifts::-webkit-scrollbar-track,
+.debug-logs::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.debug-gifts::-webkit-scrollbar-thumb,
+.debug-logs::-webkit-scrollbar-thumb {
+    background: #1D9F7A;
+    border-radius: 2px;
+}
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Кнопка отладки в меню */
+.debug-button {
+    display: none; /* Скрыта по умолчанию */
+    align-items: center;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    margin-top: 5px;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    font-size: 12px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.debug-button:hover {
+    background-color: #383838;
+    border-left-color: #ffeb3b;
+}
+
+.debug-button .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.debug-button .menu-text {
+    font-size: 13px;
+    flex: 1;
+    color: #ffeb3b;
+}

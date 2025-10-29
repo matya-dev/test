@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeeGram - Вход</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="container phone-page">
+        <div class="header">
+            <h1>Ваш номер телефона</h1>
+            <p>Проверьте код страны и введите свой номер телефона</p>
+        </div>
+        
+        <div class="phone-section"> 
+            <div class="country-row">
+                <div class="country-info">
+                    <span>Russian Federation</span>
+                </div>
+            </div>
+            <div class="country-row">
+                <div class="country-info">
+                    <span class="country-code">+7</span>
+                    <input type="tel" class="phone-input" id="phoneInput" placeholder="--- --- -- --">
+                </div>
+            </div>
+        </div>
+        
+        <button class="continue-btn" id="continueBtn">Продолжить</button>
+        
+<div class="changelog">
+    <div class="changelog-title">📝 Change Log</div>
+    
+    <div class="changelog-item">
+        <div class="changelog-version">Версия 1.3.0</div>
+        <div class="changelog-date">29 октября 2025</div>
+        <div class="changelog-changes">
+            <ul>
+                <li>Добавлена система NFT-подарков</li>
+                <li>Я поиграл в steal a brainrot</li>
+                <li>плагги насосал 1523 члена</li>
+                <li>Улучшена система профиля пользователя</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="changelog-item">
+        <div class="changelog-version">Версия 1.2.0</div>
+        <div class="changelog-date">28 октября 2025</div>
+        <div class="changelog-changes">
+            <ul>
+                <li>Добавлена система Change Log</li>
+                <li>Улучшена валидация username</li>
+                <li>Оптимизирована работа с профилем</li>
+                <li>Добавлены анимации интерфейса</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="changelog-item">
+        <div class="changelog-version">Версия 1.1.0</div>
+        <div class="changelog-date">28 октября 2025</div>
+        <div class="changelog-changes">
+            <ul>
+                <li>Добавлена боковая панель меню</li>
+                <li>Реализован просмотр и редактирование профиля</li>
+                <li>Добавлен поиск по чатам</li>
+                <li>Улучшена мобильная версия</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="changelog-item">
+        <div class="changelog-version">Версия 1.0.0</div>
+        <div class="changelog-date">27 октября 2025</div>
+        <div class="changelog-changes">
+            <ul>
+                <li>Первоначальный запуск TeeGram</li>
+                <li>Регистрация по номеру телефона</li>
+                <li>Базовый функционал чатов</li>
+                <li>Система аутентификации пользователей</li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+        <div class="token-login">Вход по токену</div>
+        
+        <div class="footer">
+            Teegram. by @DeCoder /// plaggy pidoras
+        </div>
+    </div>
+
+    <!-- Страница ввода кода -->
+    <div class="container code-page" id="codePage">
+        <div class="header">
+            <h1>Код подтверждения</h1>
+            <p>Мы отправили SMS с кодом на номер +7 ••• ••• •• ••</p>
+        </div>
+
+        <div class="code-inputs" id="codeInputs">
+            <input type="text" class="code-input" maxlength="1" data-index="0">
+            <input type="text" class="code-input" maxlength="1" data-index="1">
+            <input type="text" class="code-input" maxlength="1" data-index="2">
+            <input type="text" class="code-input" maxlength="1" data-index="3">
+            <input type="text" class="code-input" maxlength="1" data-index="4">
+        </div>
+
+        <div class="code-message">
+            Введите код из SMS сообщения
+        </div>
+    </div>
+
+    <!-- Страница ввода username -->
+    <div class="container username-page" id="usernamePage">
+        <div class="header">
+            <h1>Создание профиля</h1>
+            <p>Придумайте имя пользователя для вашего аккаунта</p>
+        </div>
+        
+        <div class="username-section"> 
+            <div class="country-row">
+                <div class="country-info">
+                    <input type="text" class="username-input" id="usernameInput" placeholder="Имя пользователя (только a-z, 0-9, мин. 5 символов)">
+                </div>
+            </div>
+            <div class="error-message" id="usernameError">
+                Имя пользователя должно содержать только буквы a-z, цифры 0-9 и быть не менее 5 символов
+            </div>
+        </div>
+        
+        <button class="continue-btn" id="usernameContinueBtn" disabled>Создать профиль</button>
+        
+        <div class="footer">
+            Это имя будет отображаться другим пользователям
+        </div>
+    </div>
+
+    <!-- Худ для уведомлений -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

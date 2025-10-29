@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeeGram - Чаты</title>
+    <link rel="stylesheet" href="css/chats.css">
+    <link rel="stylesheet" href="css/gifts.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Затемнение фона -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Боковая панель меню -->
+        <div class="menu-sidebar" id="menuSidebar">
+            <div class="menu-header">
+                <div class="account-info">
+                    <div class="account-avatar" id="accountAvatar">D</div>
+                    <div class="account-details">
+                        <div class="account-name" id="accountName">DeCoder</div>
+                        <div class="account-status" id="accountStatus">online</div>
+                    </div>
+                </div>
+                <div class="menu-title">TeeGram</div>
+            </div>
+
+            <div class="menu-list">
+                <div class="menu-item active" id="profileBtn">
+                    <div class="menu-icon">👤</div>
+                    <div class="menu-text">Moй профиль</div>
+                </div>
+                
+                <div class="menu-divider"></div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">1</div>
+                    <div class="menu-text">self.button_1</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">2</div>
+                    <div class="menu-text">self.button_2</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">3</div>
+                    <div class="menu-text">self.button_3</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">4</div>
+                    <div class="menu-text">self.button_4</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">5</div>
+                    <div class="menu-text">self.button_5</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">6</div>
+                    <div class="menu-text">self.button_6</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">7</div>
+                    <div class="menu-text">self.button_7</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-text">Настройки</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">R1</div>
+                    <div class="menu-text">self.rbutton_1</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">R2</div>
+                    <div class="menu-text">self.rbutton_2</div>
+                </div>
+                
+                <div class="menu-divider"></div>
+                
+                <div class="menu-item" id="logoutBtn">
+                    <div class="menu-icon">🚪</div>
+                    <div class="menu-text">Выйти</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Панель профиля -->
+        <div class="profile-panel" id="profilePanel">
+            <div class="profile-header">
+                <div class="profile-title">Мой профиль</div>
+                <div class="profile-actions">
+                    <div class="profile-action" id="editProfile">✏️</div>
+                    <div class="profile-action" id="closeProfile">✕</div>
+                </div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-avatar" id="profileAvatar">D</div>
+                <div class="profile-name" id="profileNameDisplay">DeCoder</div>
+                <div class="profile-status" id="profileStatusDisplay">online</div>
+                
+                <div class="profile-info">
+                    <div class="profile-field">
+                        <div class="profile-label">телефон</div>
+                        <div class="profile-value" id="profilePhoneDisplay">+888 0000 1488</div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="profile-label">биография</div>
+                        <div class="profile-value">
+                            <input type="text" class="profile-input" id="profileBioInput" value="20 y.o., designer" disabled>
+                        </div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="profile-label">имя пользователя</div>
+                        <div class="profile-value">
+                            <input type="text" class="profile-input" id="profileUsernameInput" value="decoder" disabled>
+                            <div class="profile-error" id="profileUsernameError">
+                                Только буквы a-z, цифры 0-9, мин. 5 символов
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка подарков -->
+                <div class="gifts-button" id="giftsButton">
+                    <div class="menu-icon">🎁</div>
+                    <div class="menu-text">Подарки</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Панель подарков -->
+        <div class="gifts-panel" id="giftsPanel">
+            <div class="gifts-header">
+                <div class="gifts-title">Подарки</div>
+                <div class="gifts-actions">
+                    <div class="gifts-action" id="closeGifts">✕</div>
+                </div>
+            </div>
+            <div class="gifts-content" id="giftsContent">
+                <!-- Подарки будут загружаться динамически -->
+            </div>
+        </div>
+
+        <!-- Детали подарка -->
+        <div class="gift-details-panel" id="giftDetailsPanel">
+            <div class="gift-details-header">
+                <div class="gift-details-title" id="giftDetailsTitle">Коллекционный подарок</div>
+                <div class="gifts-actions">
+                    <div class="gifts-action" id="closeGiftDetails">✕</div>
+                </div>
+            </div>
+            <div class="gift-details-content">
+                <img src="" alt="Gift" class="gift-details-image" id="giftDetailsImage">
+                
+                <table class="gift-details-table">
+                    <tr>
+                        <td class="gift-details-label">Владелец</td>
+                        <td class="gift-details-value" id="giftOwner"></td>
+                    </tr>
+                    <tr>
+                        <td class="gift-details-label">Модель</td>
+                        <td class="gift-details-value" id="giftModel"></td>
+                    </tr>
+                    <tr>
+                        <td class="gift-details-label">Фон</td>
+                        <td class="gift-details-value" id="giftBackground"></td>
+                    </tr>
+                    <tr>
+                        <td class="gift-details-label">Узор</td>
+                        <td class="gift-details-value" id="giftPattern"></td>
+                    </tr>
+                    <tr>
+                        <td class="gift-details-label">Количество</td>
+                        <td class="gift-details-value" id="giftQuantity"></td>
+                    </tr>
+                </table>
+
+                <div class="gift-visibility" id="giftVisibility">
+                    Этот подарок виден всем в Вашем профиле.
+                </div>
+
+                <div class="gift-sender" id="giftSender">
+                    Имя отправителя видите только Вы.
+                </div>
+
+                <button class="gift-action-button" id="giftActionButton">
+                    self.giftActionButton
+                </button>
+            </div>
+        </div>
+
+        <!-- Админ-панель -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <div class="admin-title">🎮 Админ-панель управления подарками</div>
+                <div class="gifts-actions">
+                    <div class="gifts-action" id="closeAdmin">✕</div>
+                </div>
+            </div>
+            <div class="admin-content">
+                <div class="admin-stats">
+                    <div class="admin-stats-title">📊 Статистика</div>
+                    <div class="admin-stats-grid">
+                        <div class="admin-stat">Всего подарков: <span class="admin-stat-value" id="totalGifts">0</span></div>
+                        <div class="admin-stat">Выдано пользователю: <span class="admin-stat-value" id="userGiftsCount">0</span></div>
+                        <div class="admin-stat">Редких: <span class="admin-stat-value" id="rareGifts">0</span></div>
+                        <div class="admin-stat">Эпических: <span class="admin-stat-value" id="epicGifts">0</span></div>
+                        <div class="admin-stat">Легендарных: <span class="admin-stat-value" id="legendaryGifts">0</span></div>
+                        <div class="admin-stat">Мифических: <span class="admin-stat-value" id="mythicalGifts">0</span></div>
+                    </div>
+                </div>
+                <div id="adminContent">
+                    <!-- Список подарков будет загружаться динамически -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Отладочная панель -->
+        <div class="debug-panel" id="debugPanel">
+            <div class="debug-header">
+                <div class="debug-title">🐛 Отладка системы подарков</div>
+                <div class="debug-actions">
+                    <div class="debug-action" id="closeDebug">✕</div>
+                </div>
+            </div>
+            <div class="debug-content">
+                <div class="debug-section">
+                    <div class="debug-section-title">📊 Статус системы</div>
+                    <div class="debug-info">
+                        <div class="debug-item">
+                            <span class="debug-label">Всего подарков в базе:</span>
+                            <span class="debug-value" id="debugTotalGifts">0</span>
+                        </div>
+                        <div class="debug-item">
+                            <span class="debug-label">Подарков у пользователя:</span>
+                            <span class="debug-value" id="debugUserGifts">0</span>
+                        </div>
+                        <div class="debug-item">
+                            <span class="debug-label">Админ-режим:</span>
+                            <span class="debug-value" id="debugAdminStatus">❌</span>
+                        </div>
+                        <div class="debug-item">
+                            <span class="debug-label">Кликов до админа:</span>
+                            <span class="debug-value" id="debugAdminClicks">0/7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-section-title">🎁 Подарки пользователя</div>
+                    <div class="debug-gifts" id="debugUserGiftsList">
+                        <!-- Список подарков будет здесь -->
+                    </div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-section-title">⚙️ Быстрые действия</div>
+                    <div class="debug-actions-grid">
+                        <button class="debug-btn" onclick="debugAddGift('pen')">➕ Добавить Pen</button>
+                        <button class="debug-btn" onclick="debugRemoveGift('pen')">➖ Удалить Pen</button>
+                        <button class="debug-btn" onclick="debugResetGifts()">🔄 Сбросить подарки</button>
+                        <button class="debug-btn" onclick="debugEnableAdmin()">🔓 Включить админа</button>
+                        <button class="debug-btn" onclick="debugShowAdminPanel()">🎮 Открыть админ-панель</button>
+                        <button class="debug-btn" onclick="debugTestToast()">🔔 Тест уведомления</button>
+                    </div>
+                </div>
+
+                <div class="debug-section">
+                    <div class="debug-section-title">📝 Логи</div>
+                    <div class="debug-logs" id="debugLogs">
+                        <div class="debug-log-item">🚀 Система отладки запущена</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Левая панель - список чатов -->
+        <div class="chats-sidebar" id="chatsSidebar">
+            <div class="sidebar-header">
+                <div class="burger-menu" id="burgerMenu">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск" id="searchInput">
+                    <div class="search-icon"></div>
+                </div>
+            </div>
+
+            <div class="chats-title">Чаты</div>
+
+            <div class="chats-list" id="chatsList">
+                <!-- Чаты будут загружаться динамически -->
+            </div>
+        </div>
+
+        <!-- Правая панель - сообщения -->
+        <div class="messages-panel" id="messagesPanel">
+            <div class="messages-header">
+                <div class="back-button" id="backButton">←</div>
+                <div class="current-chat-avatar" id="currentChatAvatar">B</div>
+                <div class="current-chat-info">
+                    <div class="current-chat-name" id="currentChatName">BotFather</div>
+                    <div class="current-chat-status" id="currentChatStatus">self.bot_botfather-id1</div>
+                </div>
+                <div class="header-actions">
+                    <i></i>
+                    <i>⋮</i>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <!-- Сообщения будут добавляться здесь динамически -->
+            </div>
+
+            <div class="input-container">
+                <div class="input-actions">
+                    <i></i>
+                    <i></i>
+                </div>
+                <textarea class="message-input" placeholder="Сообщение" rows="1" id="messageInput"></textarea>
+                <button class="send-button" id="sendButton">↑</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="data/users.js"></script>
+    <script src="data/chats-data.js"></script>
+    <script src="data/gifts-data.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/gifts.js"></script>
+    <script src="js/chats.js"></script>
+</body>
+</html>

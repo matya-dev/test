@@ -1,0 +1,339 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #383838;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 60px 20px 20px;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin-top: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #aaa;
+    font-size: 16px;
+}
+
+.phone-section {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.country-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #666;
+}
+
+.country-row:last-child {
+    border-bottom: none;
+}
+
+.country-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.country-code {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 50px;
+}
+
+.phone-input {
+    background-color: #4C4C4C;
+    border: none;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    flex: 1;
+    letter-spacing: 2px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.phone-input::placeholder {
+    color: #aaa;
+    letter-spacing: normal;
+}
+
+.username-input {
+    background-color: #4C4C4C;
+    border: none;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    flex: 1;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.username-input::placeholder {
+    color: #aaa;
+}
+
+.continue-btn {
+    background-color: #1D9F7A;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+}
+
+.continue-btn:hover {
+    background-color: #178066;
+}
+
+.continue-btn:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+.token-login {
+    text-align: center;
+    color: #1D9F7A;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.token-login:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 0 15px;
+    display: none;
+}
+
+/* Стили для страницы кода */
+.code-page {
+    display: none;
+}
+
+.code-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.code-input {
+    width: 50px;
+    height: 60px;
+    background-color: #4C4C4C;
+    border: 2px solid #666;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.code-input:focus {
+    border-color: #1D9F7A;
+}
+
+.code-input.correct {
+    border-color: #1D9F7A;
+    background-color: rgba(29, 159, 122, 0.2);
+}
+
+.code-input.incorrect {
+    border-color: #ff4444;
+    background-color: rgba(255, 68, 68, 0.2);
+}
+
+.code-message {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Стили для страницы username */
+.username-page {
+    display: none;
+}
+
+.username-section {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Change Log */
+.changelog {
+    background-color: #4C4C4C;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.changelog-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #1D9F7A;
+}
+
+.changelog-item {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #666;
+}
+
+.changelog-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.changelog-version {
+    font-weight: bold;
+    color: #1D9F7A;
+    margin-bottom: 5px;
+}
+
+.changelog-date {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.changelog-changes {
+    font-size: 14px;
+    color: #ddd;
+}
+
+.changelog-changes ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.changelog-changes li {
+    margin-bottom: 4px;
+}
+
+/* Стили для успешного состояния */
+.success-state .phone-section,
+.success-state .continue-btn {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Стили для худа (уведомлений) */
+.toast {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background-color: #ff4444;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: transform 0.4s ease;
+    font-weight: bold;
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+    background-color: #1D9F7A;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 70px 15px 15px;
+        min-height: 100vh;
+        justify-content: flex-start;
+    }
+    
+    .container {
+        max-width: 100%;
+        margin-top: 10px;
+    }
+    
+    .header h1 {
+        font-size: 22px;
+    }
+    
+    .header p {
+        font-size: 14px;
+    }
+    
+    .phone-input {
+        font-size: 16px;
+    }
+    
+    .toast {
+        top: 30px;
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    .code-input {
+        width: 45px;
+        height: 55px;
+        font-size: 20px;
+    }
+
+    .changelog {
+        max-height: 150px;
+    }
+}

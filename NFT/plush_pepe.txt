@@ -1,0 +1,4 @@
+Модель: Plush Pepe
+Фон: self.background
+Узор: self.default
+Количество: 2100 из 2100

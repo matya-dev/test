@@ -1,0 +1,4 @@
+Модель: Rose
+Фон: Dark red (Halloween)
+Узор: self.default
+Количество: 1 из 1
